@@ -19,6 +19,7 @@ const EACCES = 'EACCES';
 const LISTEN = 'listen';
 const API = '/api';
 
+errors.configure(defaults);
 
 module.exports = {
 
@@ -28,10 +29,11 @@ module.exports = {
 
     /* Register the server routes */
     require('./routes')(router);
+
     app.use(API, router);
 
     /* Register route error handlers */
-    errors.configure(defaults).bind(app);
+    errors.bind(app);
 
     /* Initalize server */
     var server;

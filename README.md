@@ -57,11 +57,14 @@ const errors = require('fi-errors');
 const express = require('express');
 const app = express();
 
+// First load the component
+errors.configure(config)
+
 // Somehow register your middlewares
 registerMiddlewares(app);
 
 // Lastly bind the errors component
-errors.configure(config).bind(app);
+errors.bind(app);
 ```
 
 #### Using the component
