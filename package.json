@@ -1,0 +1,39 @@
+{
+  "name": "fi-errors",
+  "title": "Fi Errors",
+  "version": "1.0.0",
+  "description": "Error manangement middleware for ExpressJS",
+  "main": "index.js",
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finaldevstudio/fi-errors.git"
+  },
+  "author": "Final Development Studio <sorcery@finaldevstudio.com> (http://finaldevstudio.com)",
+  "contributors": [
+    "Leonardo Ramos <leonardo@finaldevstudio.com>",
+    "Santiago G. Marín <santiago@finaldevstudio.com>"
+  ],
+  "homepage": "https://github.com/finaldevstudio/fi-errors#readme",
+  "bugs": {
+    "url": "https://github.com/finaldevstudio/fi-errors/issues"
+  },
+  "keywords": [
+    "javascript",
+    "express",
+    "middleware",
+    "errors",
+    "fi-seed"
+  ],
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "express": "^4.15.3",
+    "mocha": "^3.4.2",
+    "request": "^2.81.0"
+  }
+}
