@@ -68,4 +68,4 @@ Register the custom errors list in the application global object.
 
 **Overview:** This component acts as the very last middleware of an express application. It manages every error may be produced inside any of the previous express middlewares.
 
-**Version:** 1.0.0
+**Version:** 1.0.1
