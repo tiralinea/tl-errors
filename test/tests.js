@@ -65,7 +65,7 @@ describe('FI-ERRORS', () => {
       });
     });
   });
-  
+
   describe('[GET /not-found-request]', () => {
     it('should respond a 404 status code', (done) => {
       req('/not-found-request', (err, res) => {
@@ -73,6 +73,32 @@ describe('FI-ERRORS', () => {
 
         expect(res.statusCode).to.be.a('number');
         expect(res.statusCode).to.equal(404);
+
+        done();
+      });
+    });
+  });
+
+  describe('[GET /validation-failed-request]', () => {
+    it('should respond a 400 status code', (done) => {
+      req('/validation-failed-request', (err, res) => {
+        expect(err).to.be.null;
+
+        expect(res.statusCode).to.be.a('number');
+        expect(res.statusCode).to.equal(400);
+
+        done();
+      });
+    });
+  });
+
+  describe('[GET /duplicated-entity-request]', () => {
+    it('should respond a 409 status code', (done) => {
+      req('/duplicated-entity-request', (err, res) => {
+        expect(err).to.be.null;
+
+        expect(res.statusCode).to.be.a('number');
+        expect(res.statusCode).to.equal(409);
 
         done();
       });

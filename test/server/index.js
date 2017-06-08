@@ -6,9 +6,9 @@ const http = require('http');
 
 const router = express.Router();
 
-const defaults = require(path.join('..', '..', 'lib', 'defaults'));
-const errors = require(path.join('..', '..', 'lib', 'index'));
+const errors = require(path.join('..', '..', 'lib'));
 const config = require(path.join('..', 'config'));
+const errorsConfig = require('./errorsConfig');
 
 const ERR_EACCES = '\n  Bind [%s:%s] requires elevated privileges!\n';
 const ERR_EADDRINUSE = '\n  Bind [%s:%s] is already in use!\n';
@@ -19,7 +19,7 @@ const EACCES = 'EACCES';
 const LISTEN = 'listen';
 const API = '/api';
 
-errors.config(defaults);
+errors.config(errorsConfig);
 
 module.exports = {
 
