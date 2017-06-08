@@ -1,14 +1,14 @@
 'use strict';
 
 const path = require('path');
-const errors = require(path.join('..', '..', 'lib', 'index'));
+const errors = require(path.join('..', '..', 'lib'));
 
 const {
   PreconditionFailedError,
   UnauthorizedError,
   BadRequestError,
   ForbiddenError,
-} = errors.list();
+} = errors;
 
 module.exports = (router) => {
 

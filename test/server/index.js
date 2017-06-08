@@ -19,7 +19,7 @@ const EACCES = 'EACCES';
 const LISTEN = 'listen';
 const API = '/api';
 
-errors.configure(defaults);
+errors.config(defaults);
 
 module.exports = {
 
@@ -33,7 +33,8 @@ module.exports = {
     app.use(API, router);
 
     /* Register route error handlers */
-    errors.bind(app);
+    app.use(errors.notFoundMiddleware);
+    app.use(errors.handler);
 
     /* Initalize server */
     var server;
