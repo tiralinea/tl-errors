@@ -9,7 +9,7 @@ module.exports = {
    * Application custom errors
    */
   errors: [{
-    name: 'MongoDuplicatedError',
+    name: 'DuplicatedEntityError',
     message: 'This document is already registered.',
     code: 409
   }],
@@ -22,6 +22,6 @@ module.exports = {
     'ValidationError': 'BadRequestError',
 
     // Handle errors with code 11000 with MongoDuplicatedError
-    '11000': 'MongoDuplicatedError'
+    '11000': 'DuplicatedEntityError'
   }
 };

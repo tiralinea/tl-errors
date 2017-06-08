@@ -34,8 +34,23 @@ const config = {
       name: 'BadRequestError',
       message: 'The request could not be understood by the server due to malformed syntax'
       code: 400
+    },
+
+    {
+      name: 'DuplicatedEntityError',
+      message: 'This document is already registered.',
+      code: 409
     }
   ],
+
+   // Application custom error handlers
+  handlers: {
+    // Handle validations errors with BadRequestError
+    'ValidationError': 'BadRequestError',
+
+    // Handle errors with code 11000 with MongoDuplicatedError
+    '11000': 'DuplicatedEntityError'
+  },
 
   // Every failed HTTP request to this urls will be terminated 
   exclude: /^\/(assets|api)\//i,
@@ -58,13 +73,16 @@ const express = require('express');
 const app = express();
 
 // First load the component
-errors.configure(config)
+errors.config(config)
 
 // Somehow register your middlewares
-registerMiddlewares(app);
+app.use(myMiddlewares);
 
-// Lastly bind the errors component
-errors.bind(app);
+// Optionally use the fi-errors notFound middleware
+app.use(errors.notFoundMiddleware);
+
+// Lastly bind the fi-errors handler
+app.use(errors.handler);
 ```
 
 #### Using the component
@@ -72,7 +90,7 @@ errors.bind(app);
 
 const errors = require('fi-errors');
 
-const { BadRequestError } = errors.list();
+const { BadRequestError } = errors;
   
   module.exports = (router, db) => {
 
@@ -93,14 +111,16 @@ const { BadRequestError } = errors.list();
         res.status(HTTP_CODE_CREATED).json(user._id);
       })
 
-      .catch(next);
+      // Any ValidationError catched here will be handled with BadRequestError.
+      // Any error with code 11000 catched here will be handled with DuplicatedEntityError.
+      .catch(next); 
 
   });
 
 });
 ```
 
-Every error triggered in a middleware will be catched inside the component, including not found routes and unknown errors.
+Every error triggered in a middleware will be catched inside the component.
 
 ### Documentation
 Read the [library docs](docs.md) for the methods specification.

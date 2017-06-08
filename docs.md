@@ -1,40 +1,52 @@
 # Fi Errors
 
+
 * * *
 
-### configure(config) 
+
+### config(cfg) 
 
 Initialize and configure the errors component.
 
 **Parameters**
 
-**config**: `Object`, The errors configuration object.
+**cfg**: `Object`, The errors configuration object.
 
- - **config.errors**: `Array`, The custom errors configuration array file.
+ - **cfg.errors**: `Array`, The custom errors configuration array file.
 
- - **config.redirect**: `Object`, The default redirect urls.
+ - **cfg.redirect**: `Object`, The default redirect urls.
 
- - **config.exclude**: `String`, The urls that if failed will terminate the request.
+ - **cfg.exclude**: `String`, The urls that if failed will terminate the request.
 
 **Returns**: `Object`, The errors component.
 
 
-### bind(app) 
+### handler(err, req, res, next) 
 
-Bind the errors component to the express aplication.
+Set proper HTTP status code for custom errors.
 
 **Parameters**
 
-**app**: `Express`, The express application.
+**err**: `Error`, The generated error.
 
-**Returns**: `Object`, The errors component.
+**req**: `Object`, The request object.
+
+**res**: `Object`, The response object.
+
+**next**: `function`, The following middleware. Must be declared to access error
 
 
-### list() 
+### notFoundMiddleware(req, res, next) 
 
-Returns the component errors list.
+Catches 404s and forwards them to the error handler.
 
-**Returns**: `Object`, Every registered error.
+**Parameters**
+
+**req**: `Object`, The request object.
+
+**res**: `Object`, The response object.
+
+**next**: `function`, The following middleware.
 
 
 ### register(global, attribute) 
@@ -50,7 +62,6 @@ Register the custom errors list in the application global object.
 **Returns**: `Object`, The errors component.
 
 
-
 * * *
 
 *Final Development Studio 2017*
@@ -61,4 +72,4 @@ Register the custom errors list in the application global object.
 
 **Overview:** This component acts as the very last middleware of an express application. It manages every error may be produced inside any of the previous express middlewares.
 
-**Version:** 1.0.1
+**Version:** 2.0.0

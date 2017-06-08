@@ -16,8 +16,8 @@ const VALIDATION_ERROR = {
   message: 'The validation failed.'
 };
 
-const DUPLICATED_ENTITY_ERROR = {
-  name: 'DuplicatedEntityError',
+const DB_DUPLICATED_ENTITY_ERROR = {
+  name: 'DBDuplicatedEntityError',
   code: '11000',
   message: 'The entity is duplicated.'
 };
@@ -86,7 +86,7 @@ module.exports = (router) => {
    * Duplicated entity request route.
    */
   router.get('/duplicated-entity-request', () => {
-    var error = createError(DUPLICATED_ENTITY_ERROR);
+    var error = createError(DB_DUPLICATED_ENTITY_ERROR);
     throw new error();
   });
 
