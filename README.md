@@ -1,4 +1,4 @@
-# Fi Errors 
+# Fi Errors
 
 An [ExpressJS](http://expressjs.com) middleware to handle custom errors.
 
@@ -23,14 +23,14 @@ const config = {
   // Custom application errors
   errors: [
     // This error will be added to the component errors list
-    { 
+    {
       name: 'myCustomError',
       message: 'My custom error default message'
       code: 418
     },
-    
+
     // This error will overwrite the default BadRequestError
-    { 
+    {
       name: 'BadRequestError',
       message: 'The request could not be understood by the server due to malformed syntax'
       code: 400
@@ -52,7 +52,7 @@ const config = {
     '11000': 'DuplicatedEntityError'
   },
 
-  // Every failed HTTP request to this urls will be terminated 
+  // Every failed HTTP request to this urls will be terminated
   exclude: /^\/(assets|api)\//i,
 
   // Redirection urls
@@ -72,16 +72,16 @@ const errors = require('fi-errors');
 const express = require('express');
 const app = express();
 
-// First load the component
-errors.config(config)
+// Configure the module
+errors.config(config);
 
-// Somehow register your middlewares
-app.use(myMiddlewares);
+// Register other middlewares
+// app.use(...);
 
-// Optionally use the fi-errors notFound middleware
+// Optionally, use the fi-errors not found (404) middleware
 app.use(errors.notFoundMiddleware);
 
-// Lastly bind the fi-errors handler
+// Lastly, bind the fi-errors handler
 app.use(errors.handler);
 ```
 
@@ -91,7 +91,7 @@ app.use(errors.handler);
 const errors = require('fi-errors');
 
 const { BadRequestError } = errors;
-  
+
   module.exports = (router, db) => {
 
   const User = db.model('user');
@@ -103,7 +103,7 @@ const { BadRequestError } = errors;
 
     User.create(req.body)
 
-      .then((user) => {
+      .then(user => {
         if (!user) {
           throw new BadRequestError('The user could not be created');
         }
@@ -112,8 +112,9 @@ const { BadRequestError } = errors;
       })
 
       // Any ValidationError catched here will be handled with BadRequestError.
-      // Any error with code 11000 catched here will be handled with DuplicatedEntityError.
-      .catch(next); 
+      // Any error with code 11000 catched here will be handled with
+      // DuplicatedEntityError.
+      .catch(next);
 
   });
 
