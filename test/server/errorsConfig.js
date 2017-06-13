@@ -8,11 +8,7 @@ module.exports = {
   /**
    * Application custom errors
    */
-  errors: [{
-    name: 'DuplicatedEntityError',
-    message: 'This document is already registered.',
-    code: 409
-  }],
+  errors: [],
 
   /**
    * Application custom error handlers
@@ -22,6 +18,13 @@ module.exports = {
     'ValidationError': 'BadRequestError',
 
     // Handle errors with code 11000 with MongoDuplicatedError
-    '11000': 'DuplicatedEntityError'
-  }
+    '11000': 'ConflictError'
+  },
+
+  // Whether to use console.log, a custom debug method or none
+  debug: true,
+
+  // Condition to debug an error
+  shouldDebug: () => true
+
 };

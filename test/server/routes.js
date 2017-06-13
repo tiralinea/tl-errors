@@ -12,32 +12,17 @@ const {
 
 const VALIDATION_ERROR = {
   name: 'ValidationError',
-  code: '123321',
+  code: 123321,
   message: 'The validation failed.'
 };
 
 const DB_DUPLICATED_ENTITY_ERROR = {
   name: 'DBDuplicatedEntityError',
-  code: '11000',
+  code: 11000,
   message: 'The entity is duplicated.'
 };
 
-function createError(options) {
-  var error = function (message) {
-    this.name = options.name;
-    this.code = options.code;
-    this.message = message || options.message;
-    this.stack = (new Error()).stack;
-  };
-
-  // Chain object constructor
-  error.prototype = Object.create(Error.prototype);
-  error.prototype.constructor = error;
-
-  return error;
-}
-
-module.exports = (router) => {
+module.exports = router => {
 
   /**
    * Server entry point route.
@@ -78,16 +63,16 @@ module.exports = (router) => {
    * Validation failed request route.
    */
   router.get('/validation-failed-request', () => {
-    var error = createError(VALIDATION_ERROR);
-    throw new error();
+    var ValidationError = errors.buildError(VALIDATION_ERROR);
+    throw new ValidationError();
   });
 
   /**
    * Duplicated entity request route.
    */
   router.get('/duplicated-entity-request', () => {
-    var error = createError(DB_DUPLICATED_ENTITY_ERROR);
-    throw new error();
+    var DuplicatedEntityError = errors.buildError(DB_DUPLICATED_ENTITY_ERROR);
+    throw new DuplicatedEntityError();
   });
 
   /**
