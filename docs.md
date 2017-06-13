@@ -1,52 +1,36 @@
-# Fi Errors
+# Global
+
+
+
 
 
 * * *
 
+### buildError(options) 
 
-### config(cfg) 
-
-Initialize and configure the errors component.
-
-**Parameters**
-
-**cfg**: `Object`, The errors configuration object.
-
- - **cfg.errors**: `Array`, The custom errors configuration array file.
-
- - **cfg.redirect**: `Object`, The default redirect urls.
-
- - **cfg.exclude**: `String`, The urls that if failed will terminate the request.
-
-**Returns**: `Object`, The errors component.
-
-
-### handler(err, req, res, next) 
-
-Set proper HTTP status code for custom errors.
+Builds an error function.
 
 **Parameters**
 
-**err**: `Error`, The generated error.
+**options**: `Object`, The error definition.
 
-**req**: `Object`, The request object.
+ - **options.name**: `String`, The error name.
 
-**res**: `Object`, The response object.
+ - **options.message**: `String`, The error default message.
 
-**next**: `function`, The following middleware. Must be declared to access error
+ - **options.code**: `String`, The error HTTP response code.
+
+**Returns**: `Error`, The created custom error.
 
 
-### notFoundMiddleware(req, res, next) 
+### CustomError(message) 
 
-Catches 404s and forwards them to the error handler.
+Custom Error template.
 
 **Parameters**
 
-**req**: `Object`, The request object.
+**message**: `String`, The error's message.
 
-**res**: `Object`, The response object.
-
-**next**: `function`, The following middleware.
 
 
 ### register(global, attribute) 
@@ -62,6 +46,61 @@ Register the custom errors list in the application global object.
 **Returns**: `Object`, The errors component.
 
 
+### notFoundMiddleware(req, res, next) 
+
+Catches 404s and forwards them to the error handler.
+
+**Parameters**
+
+**req**: `Object`, The request object.
+
+**res**: `Object`, The response object.
+
+**next**: `function`, The following middleware.
+
+
+
+### handler(err, req, res, next) 
+
+Set proper HTTP status code for custom errors.
+
+**Parameters**
+
+**err**: `Error`, The generated error.
+
+**req**: `Object`, The request object.
+
+**res**: `Object`, The response object.
+
+**next**: `function`, The following middleware. Must be declared to access
+error.
+
+**Returns**: `undefined`
+
+
+### config(cfg) 
+
+Initialize and configure the errors component.
+
+**Parameters**
+
+**cfg**: `Object`, The errors configuration object.
+
+ - **cfg.errors**: `Array`, The custom errors configuration array file.
+
+ - **cfg.redirect**: `Object`, The default redirect urls.
+
+ - **cfg.exclude**: `String`, The urls that will end the response if failed.
+
+ - **cfg.debug**: `function`, The function to use to debug an error.
+
+ - **cfg.shouldDebug**: `function`, The function to call to determine if an
+error should be debugged.
+
+**Returns**: `Object`, The errors component.
+
+
+
 * * *
 
 *Final Development Studio 2017*
@@ -72,4 +111,4 @@ Register the custom errors list in the application global object.
 
 **Overview:** This component acts as the very last middleware of an express application. It manages every error may be produced inside any of the previous express middlewares.
 
-**Version:** 2.0.0
+**Version:** 1.0.0

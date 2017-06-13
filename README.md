@@ -24,20 +24,18 @@ const config = {
   errors: [
     // This error will be added to the component errors list
     {
-      name: 'myCustomError',
-      message: 'My custom error default message'
-      code: 418
+      name: 'EnhanceYourCalmError',
+      message: 'Breath in... Breath out...'
+      code: 420
     },
 
-    // This error will overwrite the default BadRequestError
+    // This errors will overwrite the default errors with new messages
     {
       name: 'BadRequestError',
-      message: 'The request could not be understood by the server due to malformed syntax'
+      message: 'The request could not be understood by the server due to malformed syntax.'
       code: 400
-    },
-
-    {
-      name: 'DuplicatedEntityError',
+    }, {
+      name: 'ConflictError',
       message: 'This document is already registered.',
       code: 409
     }
@@ -59,7 +57,18 @@ const config = {
   redirect: {
     error: '/error?err=',
     lost: '/lost?url='
-  }
+  },
+
+  // Function to use for debugging
+  debug: err => {
+    console.log('START ERROR LOG:', new Date());
+    console.log(err);
+    console.log('END ERROR LOG:', new Date());
+  },
+
+  // Condition to debug an error
+  shouldDebug: err => err.code > 399
+
 };
 ```
 ### Usage
