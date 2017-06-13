@@ -6,6 +6,13 @@
   },
   "extends": "eslint:recommended",
   "rules": {
+    "require-jsdoc": "warn",
+    "valid-jsdoc": ["warn", {
+      "prefer": {
+        "return": "returns"
+      },
+      "requireReturn": false
+    }],
     "no-console": "off",
     "indent": [
       "error",
