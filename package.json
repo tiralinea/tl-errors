@@ -7,6 +7,7 @@
   "private": false,
   "license": "MIT",
   "scripts": {
+    "docs": "rm docs.md && jsdox ./lib/index.js -o ./ && mv index.md docs.md",
     "test": "node test/index"
   },
   "repository": {
