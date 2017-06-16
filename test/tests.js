@@ -117,4 +117,17 @@ describe('FI-ERRORS', () => {
       });
     });
   });
+
+  describe('[GET /invalid-error-request]', () => {
+    it('should respond a 500 status code and throw and error', done => {
+      req('/invalid-error-request', (err, res) => {
+        expect(err).to.be.null;
+
+        expect(res.statusCode).to.be.a('number');
+        expect(res.statusCode).to.equal(500);
+
+        done();
+      });
+    });
+  });
 });

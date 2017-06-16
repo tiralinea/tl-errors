@@ -82,4 +82,11 @@ module.exports = router => {
     throw new Error();
   });
 
+  /**
+   * Invalid error request route.
+   */
+  router.get('/invalid-error-request', () => {
+    throw 'wer';
+  });
+
 };
