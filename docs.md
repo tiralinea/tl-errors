@@ -23,16 +23,6 @@ Builds an error function.
 **Returns**: `Error`, The created custom error.
 
 
-### CustomError(message) 
-
-Custom Error template.
-
-**Parameters**
-
-**message**: `String`, The error's message.
-
-
-
 ### register(global, attribute) 
 
 Register the custom errors list in the application global object.
