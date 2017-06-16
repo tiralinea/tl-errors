@@ -1,7 +1,7 @@
 {
   "name": "fi-errors",
   "title": "Fi Errors",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Error manangement middleware for ExpressJS",
   "main": "index.js",
   "private": false,
