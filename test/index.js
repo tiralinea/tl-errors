@@ -15,7 +15,7 @@ server.start(() => {
 
   /* Set request defaults */
   req = request.defaults({
-    baseUrl: `${config.server.url}:${config.server.port}/api`, // Following queries will start with...
+    baseUrl: `${ config.server.url }:${ config.server.port }/api`, // Following queries will start with...
     strictSSL: false, // Don't panic with insecure app
     jar: true // Store app cookies in a jar
   });
@@ -25,7 +25,7 @@ server.start(() => {
 
   mocha.addFile(config.tests);
 
-  mocha.run((failures) => {
+  mocha.run(failures => {
     process.exit(failures);
   });
 });

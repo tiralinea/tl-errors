@@ -1,6 +1,9 @@
 'use strict';
 
+const mongoose = require('mongoose');
+const uuid = require('uuid');
 const path = require('path');
+
 const errors = require(path.join('..', '..', 'lib'));
 
 const {
@@ -16,11 +19,7 @@ const VALIDATION_ERROR = {
   message: 'The validation failed.'
 };
 
-const DB_DUPLICATED_ENTITY_ERROR = {
-  name: 'DBDuplicatedEntityError',
-  code: 11000,
-  message: 'The entity is duplicated.'
-};
+mongoose.Promise = Promise;
 
 module.exports = router => {
 
@@ -62,17 +61,55 @@ module.exports = router => {
   /**
    * Validation failed request route.
    */
-  router.get('/validation-failed-request', () => {
-    var ValidationError = errors.buildError(VALIDATION_ERROR);
-    throw new ValidationError();
+  router.get('/validation-failed-request', (req, res, next) => {
+    mongoose.connect(`mongodb://localhost/${ uuid.v4() }`)
+
+      .then(() => {
+        var Model = mongoose.model('validation', new mongoose.Schema({
+          value: {
+            type: Number,
+            required: true
+          }
+        }));
+
+        var data = {
+          value: 'NOT A NUMBER'
+        };
+
+        return Model.ensureIndexes().then(() => Model.create(data)
+          .then(() => Model.create(data)));
+      })
+
+      .catch(err => mongoose.connection.db.dropDatabase()
+        .then(() => mongoose.disconnect())
+        .then(() => next(err)));
   });
 
   /**
    * Duplicated entity request route.
    */
-  router.get('/duplicated-entity-request', () => {
-    var DuplicatedEntityError = errors.buildError(DB_DUPLICATED_ENTITY_ERROR);
-    throw new DuplicatedEntityError();
+  router.get('/duplicated-entity-request', (req, res, next) => {
+    mongoose.connect(`mongodb://localhost/${ uuid.v4() }`)
+
+      .then(() => {
+        var Model = mongoose.model('uniqueness', new mongoose.Schema({
+          value: {
+            type: String,
+            unique: true
+          }
+        }));
+
+        var data = {
+          value: 'NOT UNIQUE'
+        };
+
+        return Model.ensureIndexes().then(() => Model.create(data)
+          .then(() => Model.create(data)));
+      })
+
+      .catch(err => mongoose.connection.db.dropDatabase()
+        .then(() => mongoose.disconnect())
+        .then(() => next(err)));
   });
 
   /**
