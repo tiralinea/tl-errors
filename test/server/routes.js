@@ -1,28 +1,15 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const uuid = require('uuid');
 const path = require('path');
 
 const errors = require(path.join('..', '..', 'lib'));
 
-const {
-  PreconditionFailedError,
-  UnauthorizedError,
-  BadRequestError,
-  ForbiddenError,
-} = errors;
-
-const VALIDATION_ERROR = {
-  name: 'ValidationError',
-  code: 123321,
-  message: 'The validation failed.'
-};
+const { PreconditionFailedError, UnauthorizedError, BadRequestError, ForbiddenError } = errors;
 
 mongoose.Promise = Promise;
 
 module.exports = router => {
-
   /**
    * Server entry point route.
    */
@@ -62,54 +49,66 @@ module.exports = router => {
    * Validation failed request route.
    */
   router.get('/validation-failed-request', (req, res, next) => {
-    mongoose.connect(`mongodb://localhost/${ uuid.v4() }`)
+    mongoose
+      .connect(`mongodb://localhost/fi-errors-test-${Date.now()}`)
 
       .then(() => {
-        var Model = mongoose.model('validation', new mongoose.Schema({
-          value: {
-            type: Number,
-            required: true
-          }
-        }));
+        var Model = mongoose.model(
+          'validation',
+          new mongoose.Schema({
+            value: {
+              type: Number,
+              required: true
+            }
+          })
+        );
 
         var data = {
           value: 'NOT A NUMBER'
         };
 
-        return Model.ensureIndexes().then(() => Model.create(data)
-          .then(() => Model.create(data)));
+        return Model.ensureIndexes().then(() => Model.create(data).then(() => Model.create(data)));
       })
 
-      .catch(err => mongoose.connection.db.dropDatabase()
-        .then(() => mongoose.disconnect())
-        .then(() => next(err)));
+      .catch(err =>
+        mongoose.connection.db
+          .dropDatabase()
+          .then(() => mongoose.disconnect())
+          .then(() => next(err))
+      );
   });
 
   /**
    * Duplicated entity request route.
    */
   router.get('/duplicated-entity-request', (req, res, next) => {
-    mongoose.connect(`mongodb://localhost/${ uuid.v4() }`)
+    mongoose
+      .connect(`mongodb://localhost/fi-errors-test-${Date.now()}`)
 
       .then(() => {
-        var Model = mongoose.model('uniqueness', new mongoose.Schema({
-          value: {
-            type: String,
-            unique: true
-          }
-        }));
+        var Model = mongoose.model(
+          'uniqueness',
+          new mongoose.Schema({
+            value: {
+              type: String,
+              unique: true
+            }
+          })
+        );
 
         var data = {
           value: 'NOT UNIQUE'
         };
 
-        return Model.ensureIndexes().then(() => Model.create(data)
-          .then(() => Model.create(data)));
+        return Model.ensureIndexes().then(() => Model.create(data).then(() => Model.create(data)));
       })
 
-      .catch(err => mongoose.connection.db.dropDatabase()
-        .then(() => mongoose.disconnect())
-        .then(() => next(err)));
+      .catch(err =>
+        mongoose.connection.db
+          .dropDatabase()
+          .then(() => mongoose.disconnect())
+          .then(() => next(err))
+      );
   });
 
   /**
@@ -125,5 +124,4 @@ module.exports = router => {
   router.get('/invalid-error-request', () => {
     throw 'wer';
   });
-
 };
