@@ -1,3 +1,7 @@
+---
+### No longer maintained.
+---
+
 # Fi Errors [![Build Status](https://travis-ci.org/FinalDevStudio/fi-errors.svg?branch=master)](https://travis-ci.org/FinalDevStudio/fi-errors)
 
 An [ExpressJS](http://expressjs.com) middleware to handle custom errors.
