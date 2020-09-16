@@ -1,7 +1,7 @@
 {
   "name": "tl-errors",
   "title": "TL Errors",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "Error manangement middleware for ExpressJS",
   "main": "index.js",
   "private": false,
