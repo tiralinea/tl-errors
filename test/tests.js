@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 
 const req = require('./req').get();
 
-describe('Fi Errors', () => {
+describe('TL Errors', () => {
   describe('[GET /]', () => {
     it('should respond a 200 status code', done => {
       req('/', (err, res) => {
