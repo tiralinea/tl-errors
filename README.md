@@ -103,28 +103,29 @@ const { BadRequestError } = errors;
 
 module.exports = (router, db) => {
 
-const User = db.model('user');
+  const User = db.model('user');
 
-/**
- * Creates a user.
- */
-router.post('/', async (req, res, next) => {
+  /**
+   * Creates a user.
+   */
+  router.post('/', async (req, res, next) => {
 
-  try {
-    const user = await User.create(req.body);
+    try {
+      const user = await User.create(req.body);
 
-    if (!user) {
-      throw new BadRequestError('The user could not be created');
+      if (!user) {
+        throw new BadRequestError('The user could not be created');
+      }
+
+      res.status(HTTP_CODE_CREATED).json(user._id);
+    } catch (err) {
+      // Any ValidationError caught here will be handled with BadRequestError.
+      // Any error with code 11000 caught here will be handled with
+      // DuplicatedEntityError.
+      next(err);
     }
-
-    res.status(HTTP_CODE_CREATED).json(user._id);
-  } catch (err) {
-    // Any ValidationError caught here will be handled with BadRequestError.
-    // Any error with code 11000 caught here will be handled with
-    // DuplicatedEntityError.
-    next(err);
-  }
-});
+  });
+}
 ```
 
 Every error triggered in a middleware will be caught inside the component.
