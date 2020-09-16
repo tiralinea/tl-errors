@@ -1,6 +1,6 @@
 {
-  "name": "fi-errors",
-  "title": "Fi Errors",
+  "name": "tl-errors",
+  "title": "TL Errors",
   "version": "2.2.4",
   "description": "Error manangement middleware for ExpressJS",
   "main": "index.js",
@@ -12,23 +12,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/finaldevstudio/fi-errors.git"
+    "url": "git+https://github.com/tiralinea/tl-errors.git"
   },
-  "author": "Final Development Studio <sorcery@finaldevstudio.com> (http://finaldevstudio.com)",
+  "author": "Tiralinea <contacto@tiralinea.com> (https://tiralinea.com)",
   "contributors": [
-    "Leonardo Ramos <leonardo@finaldevstudio.com>",
-    "Santiago G. Marín <santiago@finaldevstudio.com>"
+    "Santiago G. Marín <santiago@finaldevstudio.com>",
+    "Leonardo Ramos <leonardo@tiralinea.com>",
+    "German Antonio <german@tiralinea.com>"
   ],
-  "homepage": "https://github.com/finaldevstudio/fi-errors#readme",
+  "homepage": "https://github.com/tiralinea/tl-errors#readme",
   "bugs": {
-    "url": "https://github.com/finaldevstudio/fi-errors/issues"
+    "url": "https://github.com/tiralinea/tl-errors/issues"
   },
   "keywords": [
     "javascript",
     "express",
     "middleware",
     "errors",
-    "fi-seed"
+    "tl-seed"
   ],
   "devDependencies": {
     "chai": "^4.2.0",
@@ -40,6 +41,6 @@
     "uuid": "^3.3.2"
   },
   "dependencies": {
-    "fi-is": "^1.3.1"
+    "@fiquu/is": "^1.3.3"
   }
 }
