@@ -1,8 +1,4 @@
----
-### No longer maintained.
----
-
-# Fi Errors [![Build Status](https://travis-ci.org/FinalDevStudio/fi-errors.svg?branch=master)](https://travis-ci.org/FinalDevStudio/fi-errors)
+# TL Errors
 
 An [ExpressJS](http://expressjs.com) middleware to handle custom errors.
 
@@ -12,7 +8,7 @@ An [ExpressJS](http://expressjs.com) middleware to handle custom errors.
 ### Installation
 
 ```sh
-npm install --save fi-errors
+npm install --save tl-errors
 ```
 
 ### Configuration
@@ -33,7 +29,7 @@ const config = {
       code: 420
     },
 
-    // This errors will overwrite the default errors with new messages
+    // These errors will overwrite the default errors with new messages
     {
       name: 'BadRequestError',
       message: 'The request could not be understood by the server due to malformed syntax.'
@@ -54,7 +50,7 @@ const config = {
     '11000': 'DuplicatedEntityError'
   },
 
-  // Every failed HTTP request to this urls will be terminated
+  // Every failed HTTP request to these urls will be terminated
   exclude: /^\/(assets|api)\//i,
 
   // Redirection urls
@@ -81,7 +77,7 @@ To use the package you must configure it and then bind it to the express applica
 
 #### Binding the component
 ```javascript
-const errors = require('fi-errors');
+const errors = require('tl-errors');
 const express = require('express');
 const app = express();
 
@@ -91,50 +87,47 @@ errors.config(config);
 // Register other middlewares
 // app.use(...);
 
-// Optionally, use the fi-errors not found (404) middleware
+// Optionally, use the tl-errors not found (404) middleware
 app.use(errors.notFoundMiddleware);
 
-// Lastly, bind the fi-errors handler
+// Lastly, bind the tl-errors handler
 app.use(errors.handler);
 ```
 
 #### Using the component
 ```javascript
 
-const errors = require('fi-errors');
+const errors = require('tl-errors');
 
 const { BadRequestError } = errors;
 
-  module.exports = (router, db) => {
+module.exports = (router, db) => {
 
-  const User = db.model('user');
+const User = db.model('user');
 
-  /**
-   * Creates a user.
-   */
-  router.post('/', (req, res, next) => {
+/**
+ * Creates a user.
+ */
+router.post('/', async (req, res, next) => {
 
-    User.create(req.body)
+  try {
+    const user = await User.create(req.body);
 
-      .then(user => {
-        if (!user) {
-          throw new BadRequestError('The user could not be created');
-        }
+    if (!user) {
+      throw new BadRequestError('The user could not be created');
+    }
 
-        res.status(HTTP_CODE_CREATED).json(user._id);
-      })
-
-      // Any ValidationError catched here will be handled with BadRequestError.
-      // Any error with code 11000 catched here will be handled with
-      // DuplicatedEntityError.
-      .catch(next);
-
-  });
-
+    res.status(HTTP_CODE_CREATED).json(user._id);
+  } catch (err) {
+    // Any ValidationError caught here will be handled with BadRequestError.
+    // Any error with code 11000 caught here will be handled with
+    // DuplicatedEntityError.
+    next(err);
+  }
 });
 ```
 
-Every error triggered in a middleware will be catched inside the component.
+Every error triggered in a middleware will be caught inside the component.
 
 ### Documentation
 Read the [library docs](docs.md) for the methods specification.
